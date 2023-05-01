@@ -14,10 +14,29 @@
 <script>
     const list = document.getElementById("list");
     let element
-    for(let i= 0;i < 30; i++)   {
+    for(let i= 1;i < 50; i++)   {
         element = document.createElement("img")
         element.src=`https://placedog.net/500/280?id=${i}`
         list.appendChild(element)
     }
+    const registerServiceWorker = async () => {
+       if("serviceWorker" in navigator) {
+            try {
+                const registration = await navigator.serviceWorker.register("/service-worker.js",{
+                    scope: "/"
+                })
+                if(registration.installing) {
+                    console.log("service worker is installing")
+                } else if(registration.waiting)  {
+                    console.log("service worker installed successfully")
+                } else if(registration.active)   {
+                    console.log("service worker is active")
+                }
+            } catch(error) {
+                console.log(`Registration failed: ${error}`)
+            }
+       } 
+    }
+    registerServiceWorker()
 </script>
 </html>
